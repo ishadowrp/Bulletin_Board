@@ -74,9 +74,6 @@ class CategoryDetail(DetailView):
         context = super().get_context_data(**kwargs)
 
         context['posts'] = Post.objects.filter(category=self.object)
-
-        print(context)
-
         i = 0
         list_fh = []
         list_sh = []
