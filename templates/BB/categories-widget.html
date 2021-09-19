@@ -1,0 +1,28 @@
+{% extends 'flatpages/default.html' %}
+
+{% load i18n %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block cat-widget %}
+    {% if categories %}
+        <div class="col-sm-6">
+            <ul class="list-unstyled mb-0">
+                {% for category in cat_fh %}
+                    <li><a href="#!">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <ul class="list-unstyled mb-0">
+                {% for category in cat_sh %}
+                    <li><a href="#!">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %} <!-- Если товаров нет, то говорим что товаров нет ;) -->
+        <h4> {% blocktrans %}Categories not found{% endblocktrans %}</h4>
+    {% endif %}
+{% endblock cat-widget %}

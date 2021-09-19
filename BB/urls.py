@@ -13,14 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic.base import TemplateView
-from BB.views import PostList
+from .views import PostList, PostDetail, CategoryDetail, PostCreateView, CategoryListWidget # импортируем наше представление
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('pages/', include('django.contrib.flatpages.urls')),
-    path('posts/', include('BB.urls')),  # делаем так, чтобы все адреса из нашего приложения (news/urls.py) сами автоматически подключались когда мы их добавим.
-    path('', PostList.as_view()),
+    path('', PostList.as_view(), name='post_list'),
+    path('<int:pk>', PostDetail.as_view(), name='post_detail'),  # pk — это первичный ключ товара, который будет выводиться у нас в шаблон
+    path('category/<int:pk>', CategoryDetail.as_view(), name='category_detail'),  # pk — это первичный ключ товара, который будет выводиться у нас в шаблон
+    # path('create/', PostCreateView.as_view(), name='post_create'),
 ]

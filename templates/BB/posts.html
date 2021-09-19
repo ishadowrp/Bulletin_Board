@@ -1,0 +1,53 @@
+{% extends 'flatpages/default.html' %}
+
+{% load i18n %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block content %}
+    {% if posts %}
+        {% for post in posts %}
+            <article>
+                <!-- Post header-->
+                <header class="mb-4">
+                    <!-- Post title-->
+                    <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
+                    <!-- Post meta content-->
+                    <div class="text-muted fst-italic mb-2">Posted on {{ post.date_posted|date:'d-M-Y' }} {{ post_posted|time:"H:i" }} by {{ post.author }}</div>
+                    <!-- Post categories-->
+                    {% for c in post.category.all %}
+                        <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'category_detail' c.id %}">{{ c.name }}</a>
+                    {% endfor %}
+                </header>
+                <section class="mb-5">
+                    {{ post.content|safe|truncatechars:200 }} <a href="{% url 'post_detail' post.id %}">more..</a>
+                </section>
+            </article>
+        {% endfor %}
+    {% else %} <!-- Если товаров нет, то говорим что товаров нет ;) -->
+        <h2> {% blocktrans %}Blog is clear{% endblocktrans %}</h2>
+    {% endif %}
+{% endblock content %}
+
+{% block cat-widget %}
+    {% if cat_fh or cat_sh %}
+        <div class="col-sm-6">
+            <ul class="list-unstyled mb-0">
+                {% for category in cat_fh %}
+                    <li><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <ul class="list-unstyled mb-0">
+                {% for category in cat_sh %}
+                    <li><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %} <!-- Если товаров нет, то говорим что товаров нет ;) -->
+        <h4>Categories not found</h4>
+    {% endif %}
+{% endblock cat-widget %}

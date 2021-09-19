@@ -22,6 +22,21 @@ class Post(models.Model):
         list_of_category = [category.name for category in self.category.all()]
         return list_of_category
 
+    def like(self):
+        self.rating += 1
+        self.save()
+
+    def dislike(self):
+        self.rating -= 1
+        self.save()
+
+    def preview(self):
+        return self.content[:125]+'...'
+
+    def get_absolute_url(self): # добавим абсолютный путь чтобы после создания нас перебрасывало на страницу с новостью
+        return f'/news/{self.id}'
+
+
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
