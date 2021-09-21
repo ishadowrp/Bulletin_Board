@@ -47,11 +47,11 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
 
     'BB',
-    # 'BB.apps.BbConfig',
-    # 'news.apps.NewsConfig',
     'BB.templatetags',
 
 ]
+
+# AUTH_USER_MODEL = 'accounts.CustomUser'  # new
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

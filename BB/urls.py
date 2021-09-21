@@ -17,11 +17,13 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from .views import PostList, PostDetail, CategoryDetail, PostCreateView, CategoryListWidget # импортируем наше представление
+from .views import PostList, PostDetail, CategoryDetail, SearchResultsListView, PostCreateView  # импортируем наше представление
 
 urlpatterns = [
     path('', PostList.as_view(), name='post_list'),
     path('<int:pk>', PostDetail.as_view(), name='post_detail'),  # pk — это первичный ключ товара, который будет выводиться у нас в шаблон
-    path('category/<int:pk>', CategoryDetail.as_view(), name='category_detail'),  # pk — это первичный ключ товара, который будет выводиться у нас в шаблон
+    path('category/<int:pk>', CategoryDetail.as_view(), name='category_detail'),
+    path('search/', SearchResultsListView.as_view(), name='search_results'),
+    # pk — это первичный ключ товара, который будет выводиться у нас в шаблон
     # path('create/', PostCreateView.as_view(), name='post_create'),
 ]

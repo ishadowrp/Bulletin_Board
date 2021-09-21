@@ -16,11 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
-from BB.views import PostList
+from BB.views import PostList, HomePageView, AboutPageView, ContactsPageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('pages/', include('django.contrib.flatpages.urls')),
+    path('home/', HomePageView.as_view(), name='home'),
+    path('about/', AboutPageView.as_view(), name='about'),
+    path('contacts/', ContactsPageView.as_view(), name='contacts'),
     path('posts/', include('BB.urls')),  # делаем так, чтобы все адреса из нашего приложения (news/urls.py) сами автоматически подключались когда мы их добавим.
+
     path('', PostList.as_view()),
 ]

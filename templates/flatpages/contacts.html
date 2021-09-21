@@ -1,11 +1,35 @@
 {% extends 'flatpages/default.html' %}
 
+{% load static %}
+
 {% block title %}
-{{ flatpage.title }}
 {% endblock title %}
 
 {% block content %}
-    <h2>{{ flatpage.title }}</h2>
+    <h2>Contact US</h2>
     <hr>
-   {{ flatpage.content }}
+    <p class="fs-5 mb-4">
+    If you liked my project, you can write to me at this <a href="mailto:ilya.dianburgskiy@yandex.ru">e-mail</a>.
+    </p>
 {% endblock content %}
+
+{% block cat-widget %}
+    {% if cat_fh or cat_sh %}
+        <div class="col-sm-6">
+            <ul class="list-unstyled mb-0">
+                {% for category in cat_fh %}
+                    <li><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <ul class="list-unstyled mb-0">
+                {% for category in cat_sh %}
+                    <li><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %} <!-- Если товаров нет, то говорим что товаров нет ;) -->
+        <h4>Categories not found</h4>
+    {% endif %}
+{% endblock cat-widget %}
