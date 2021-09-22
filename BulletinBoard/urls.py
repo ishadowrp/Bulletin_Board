@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
 from BB.views import PostList, HomePageView, AboutPageView, ContactsPageView
+from accounts.views import SignupPageView, LoginPageView, LogoutPageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +25,9 @@ urlpatterns = [
     path('about/', AboutPageView.as_view(), name='about'),
     path('contacts/', ContactsPageView.as_view(), name='contacts'),
     path('posts/', include('BB.urls')),  # делаем так, чтобы все адреса из нашего приложения (news/urls.py) сами автоматически подключались когда мы их добавим.
-
+    path('accounts/signup/', SignupPageView.as_view(), name='account_signup'),
+    path('accounts/login/', LoginPageView.as_view(), name='account_login'),
+    path('accounts/logout/', LogoutPageView.as_view(), name='account_logout'),
+    path('accounts/', include('allauth.urls')),
     path('', PostList.as_view()),
 ]

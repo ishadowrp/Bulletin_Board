@@ -63,8 +63,32 @@
                     </div>
                     <!-- Side widget-->
                     <div class="card mb-4">
-                        <div class="card-header">Side Widget</div>
-                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                        <div class="card-header">
+                            {% if user.is_authenticated %}
+                                Hi, {{ user.username }}! <a href="{% url 'account_logout' %}">Log Out</a>
+                            {% else %}
+                                <a href="{% url 'account_login' %}">Sign In</a>/<a href="{% url 'account_signup' %}">Sign Up</a>
+                            {% endif %}
+                        </div>
+                        {% if user.is_authenticated %}
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <ul class="list-unstyled mb-0">
+                                            <li><a href="#!">Edit profile</a></li>
+                                            <li><a href="#!">Add post</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <ul class="list-unstyled mb-0">
+                                            <li><a href="#!">Responses to your post</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="card-body">To fully work with the blog, log in!</div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

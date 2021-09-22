@@ -41,17 +41,45 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
 
-    'django_filters',
-
     'ckeditor',
     'ckeditor_uploader',
 
+    # Third-party
+    'crispy_forms',
+    'allauth',
+    'allauth.account',
+
     'BB',
     'BB.templatetags',
+    'accounts',
 
 ]
 
-# AUTH_USER_MODEL = 'accounts.CustomUser'  # new
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+# allauth config
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+    )
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# --------
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+# allauth config
+ACCOUNT_LOGOUT_REDIRECT = 'home'
+# ACCOUNT_SESSION_REMEMBER = True  # Если хотим убрать чекбокс с Remember me
+# --------
+
+# django-allauth config
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_FORMS = {'signup': 'accounts.forms.MySignupForm'}
+# -----
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -150,8 +178,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_BROKER_URL = 'redis://localhost:6379'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+# CELERY_ACCEPT_CONTENT = ['application/json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
