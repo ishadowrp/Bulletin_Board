@@ -1,5 +1,9 @@
 {% extends 'flatpages/default.html' %}
 
+{% load crispy_forms_tags %}
+
+{% load account %}
+
 {% load static %}
 
 {% block content %}
@@ -12,11 +16,7 @@
             {% if post.author == current_user %}
                 <div class="text-muted fst-italic mb-2">Posted on {{ post.date_posted|date:'d-M-Y' }} {{ post_posted|time:"H:i" }} by {{ post.author }} <a href="{% url 'post_edit' post.pk %}">+ Edit Blog Post</a>|<a href="{% url 'post_delete' post.pk %}">+ Delete Blog Post</a></div>
             {% else %}
-                {% if user.is_authenticated %}
-                    <div class="text-muted fst-italic mb-2">Posted on {{ post.date_posted|date:'d-M-Y' }} {{ post_posted|time:"H:i" }} by {{ post.author }} <a href="{% url 'comment_create' post.pk %}">+ Add comment</a></div>
-                {% else %}
-                    <div class="text-muted fst-italic mb-2">Posted on {{ post.date_posted|date:'d-M-Y' }} {{ post_posted|time:"H:i" }} by {{ post.author }}</div>
-                {% endif %}
+                <div class="text-muted fst-italic mb-2">Posted on {{ post.date_posted|date:'d-M-Y' }} {{ post_posted|time:"H:i" }} by {{ post.author }}</div>
             {% endif %}
             <!-- Post categories-->
             {% for c in post.category.all %}
@@ -27,6 +27,19 @@
             {{ post.content|safe }}
         </section>
     </article>
+
+    <section class="mb-5">
+        <div class="card bg-light">
+            <div class="card-body">
+                <!-- Comment form-->
+                <form class="mb-4" method="POST">
+                    {% csrf_token %}
+                    {% crispy form %}
+                </form>
+            </div>
+        </div>
+    </section>
+
 {% endblock content %}
 
 {% block cat-widget %}

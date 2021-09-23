@@ -1,9 +1,10 @@
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Row, Field
+from crispy_forms.layout import Submit, Layout, Row, Field, HTML
 
-from .models import Post
+from .models import Post, Comment
+from django.forms.widgets import Textarea
 from ckeditor.widgets import CKEditorWidget
 
 # Создаём модельную форму
@@ -65,3 +66,32 @@ class PostFormUpdate(forms.ModelForm):
         )
 
         self.helper.add_input(Submit('submit', 'Edit post', css_class='btn btn-success'))
+
+class CommentFormCreate(forms.ModelForm):
+
+    content = forms.CharField(widget=Textarea)
+
+    class Meta:
+        model = Comment
+        fields = ['content']
+        labels = {'content': 'Comment:'}
+
+    def __init__(self, *args, **kwargs):
+        super(CommentFormCreate, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.layout = Layout(
+            Row(
+                Field('content', css_class='form-control'),
+            ),
+            HTML('<br>'),
+        )
+
+        self.helper.add_input(Submit('submit', 'Add comment', css_class='btn btn-success'))
+
+class CommentFormList(forms.ModelForm):
+    # в класс мета как обычно надо написать модель по которой будет строится форма и нужные нам поля. Мы уже делали что-то похожее с фильтрами.
+    class Meta:
+        model = Comment
+        fields = ['post', 'author', 'content', 'approved']
+        labels = {'post': 'Post', 'author': 'Author:', 'content': 'Comment:', 'approved': 'Approved'}

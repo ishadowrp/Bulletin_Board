@@ -37,6 +37,9 @@ class Post(models.Model):
     def get_absolute_url(self):  # добавим абсолютный путь чтобы после создания нас перебрасывало на страницу с новостью
         return f'/posts/{self.id}'
 
+    def __str__(self):
+        return f'{self.title}'
+
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

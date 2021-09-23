@@ -1,0 +1,68 @@
+{% extends 'flatpages/default.html' %}
+
+{% load static %}
+
+{% load i18n %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block content %}
+    {% if comments %}
+        {% for comment in comments %}
+            {% if comment.approved %}
+            <article class="form-control">
+                <!-- Post header-->
+                <header class="mb-4">
+                    <!-- Post title-->
+                    <h3 class="fw-bolder mb-1">Post: {{ comment.post_title }}. Approved!</h3>
+                    <!-- Post meta content-->
+                    <div class="text-muted fst-italic mb-2">Posted on {{ comment.date_posted|date:'d-M-Y' }} {{ comment.date_posted|time:"H:i" }} by {{ comment.author }}</div>
+                    <hr><!-- Post categories-->
+                </header>
+                <section class="mb-5 was-validated">
+                    {{ comment.content }}
+                </section>
+            </article>
+            {% else %}
+            <article class="form-control">
+                <!-- Post header-->
+                <header class="mb-4">
+                    <!-- Post title-->
+                    <h3 class="fw-bolder mb-1">Post: {{ comment.post_title }}</h3>
+                    <!-- Post meta content-->
+                        <div class="text-muted fst-italic mb-2">Posted on {{ comment.date_posted|date:'d-M-Y' }} {{ comment.date_posted|time:"H:i" }} by {{ comment.author }} <a href="{% url 'comment_approved' comment.pk %}">+ Comment Approved</a></div>
+                    <!-- Post categories-->
+                </header>
+                <section class="mb-5">
+                    {{ comment.content }}
+                </section>
+            </article>
+            {% endif %}
+        {% endfor %}
+    {% else %} <!-- Если товаров нет, то говорим что товаров нет ;) -->
+        <h2> {% blocktrans %}Comments not found{% endblocktrans %}</h2>
+    {% endif %}
+{% endblock content %}
+
+{% block cat-widget %}
+    {% if cat_fh or cat_sh %}
+        <div class="col-sm-6">
+            <ul class="list-unstyled mb-0">
+                {% for category in cat_fh %}
+                    <li><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <ul class="list-unstyled mb-0">
+                {% for category in cat_sh %}
+                    <li><a href="{% url 'category_detail' category.id %}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %} <!-- Если товаров нет, то говорим что товаров нет ;) -->
+        <h4>Categories not found</h4>
+    {% endif %}
+{% endblock cat-widget %}

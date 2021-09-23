@@ -1,23 +1,5 @@
-"""BulletinBoard URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-
-
-from django.contrib import admin
-from django.urls import path, include
-from .views import PostList, PostDetail, CategoryDetail, SearchResultsListView, PostCreateView, PostUpdateView, PostDeleteView  # импортируем наше представление
+from django.urls import path
+from .views import PostList, PostDetail, CategoryDetail, SearchResultsListView, PostCreateView, PostUpdateView, PostDeleteView, CommentCreateView, CommentListView, comment_approved  # импортируем наше представление
 
 urlpatterns = [
     path('', PostList.as_view(), name='post_list'),
@@ -26,7 +8,8 @@ urlpatterns = [
     path('create/', PostCreateView.as_view(), name='post_create'),
     path('edit/<int:pk>', PostUpdateView.as_view(), name='post_edit'),
     path('delete/<int:pk>', PostDeleteView.as_view(), name='post_delete'),
+    path('comment_create/<int:pk>', CommentCreateView.as_view(), name='comment_create'),
+    path('comments/', CommentListView.as_view(), name='comment_list'),
+    path('comments/approved/<int:pk>', comment_approved, name='comment_approved'),
     path('search/', SearchResultsListView.as_view(), name='search_results'),
-    # pk — это первичный ключ товара, который будет выводиться у нас в шаблон
-    # path('create/', PostCreateView.as_view(), name='post_create'),
 ]
