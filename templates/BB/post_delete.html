@@ -1,19 +1,17 @@
 {% extends 'flatpages/default.html' %}
 
-{% load static %}
-
 {% load crispy_forms_tags %}
 
-{% block title %}Sign Up{% endblock title %}
+{% load account %}
+
+{% load static %}
 
 {% block content %}
-    <h2>Sign Up</h2>
-    <form class="form-control" method="post">
-        {% csrf_token %}
-        {% crispy form %}
-    <br>
-    <button class="btn btn-success" type="submit">Sign Up</button>
-    </form>
+    <h1>Delete post</h1>
+    <form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ post.title }}"?</p>
+    <input class="btn btn-danger" type="submit" value="Confirm">
+</form>
 {% endblock content %}
 
 {% block cat-widget %}

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
 from BB.views import PostList, HomePageView, AboutPageView, ContactsPageView
-from accounts.views import SignupPageView, LoginPageView, LogoutPageView
+from accounts.views import SignupPageView, LoginPageView, LogoutPageView, ConfirmEmailPageView, MyPasswordChangeView, MyPasswordResetView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,9 +25,13 @@ urlpatterns = [
     path('about/', AboutPageView.as_view(), name='about'),
     path('contacts/', ContactsPageView.as_view(), name='contacts'),
     path('posts/', include('BB.urls')),  # делаем так, чтобы все адреса из нашего приложения (news/urls.py) сами автоматически подключались когда мы их добавим.
-    path('accounts/signup/', SignupPageView.as_view(), name='account_signup'),
-    path('accounts/login/', LoginPageView.as_view(), name='account_login'),
-    path('accounts/logout/', LogoutPageView.as_view(), name='account_logout'),
-    path('accounts/', include('allauth.urls')),
+    path('account/signup/', SignupPageView.as_view(), name='account_signup'),
+    path('account/login/', LoginPageView.as_view(), name='account_login'),
+    path('account/logout/', LogoutPageView.as_view(), name='account_logout'),
+    path('account/password/change/', MyPasswordChangeView.as_view(), name='account_change_password'),
+    path('account/password/reset/', MyPasswordResetView.as_view(), name='account_reset_password'),
+    # path('account/confirm-email/', ConfirmEmailPageView.as_view(), name='account_confirm-email'),
+    path('account/', include('allauth.urls')),
+    path('account/', include('accounts.urls')),
     path('', PostList.as_view()),
 ]

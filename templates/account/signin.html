@@ -2,18 +2,26 @@
 
 {% load static %}
 
+{% load account %}
+
 {% load crispy_forms_tags %}
 
-{% block title %}Sign Up{% endblock title %}
+{% block title %}Log In{% endblock title %}
 
 {% block content %}
-    <h2>Sign Up</h2>
-    <form class="form-control" method="post">
+    {% user_display user as user_display %}
+
+    <h2>Welcome to our site, {{ user.first_name }} {{ user.last_name }}!!</h2>
+
+    {% if user.is_authenticated %}
+
+      <form class="form-control" method="POST">
         {% csrf_token %}
         {% crispy form %}
-    <br>
-    <button class="btn btn-success" type="submit">Sign Up</button>
-    </form>
+        <br>
+{#        <button class="btn btn-success" type="submit">Edit</button>#}
+      </form>
+    {% endif %}
 {% endblock content %}
 
 {% block cat-widget %}

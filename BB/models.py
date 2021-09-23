@@ -34,8 +34,8 @@ class Post(models.Model):
     def preview(self):
         return self.content[:125]+'...'
 
-    def get_absolute_url(self): # добавим абсолютный путь чтобы после создания нас перебрасывало на страницу с новостью
-        return f'/news/{self.id}'
+    def get_absolute_url(self):  # добавим абсолютный путь чтобы после создания нас перебрасывало на страницу с новостью
+        return f'/posts/{self.id}'
 
 
 class PostCategory(models.Model):
