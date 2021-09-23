@@ -10,12 +10,12 @@
             <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
             <!-- Post meta content-->
             {% if post.author == current_user %}
-                <div class="text-muted fst-italic mb-2">Posted on {{ post.date_posted|date:'d-M-Y' }} {{ post_posted|time:"H:i" }} by {{ post.author }} <a href="{% url 'post_edit' post.pk %}">+ Edit Blog Post</a>|<a href="{% url 'post_delete' post.pk %}">+ Delete Blog Post</a></div>
+                <div class="text-muted fst-italic mb-2">Posted on {{ post.date_posted|date:'d-M-Y' }} {{ post.date_posted|time:"H:i" }} by {{ post.author }} <a href="{% url 'post_edit' post.pk %}">+ Edit Blog Post</a>|<a href="{% url 'post_delete' post.pk %}">+ Delete Blog Post</a></div>
             {% else %}
                 {% if user.is_authenticated %}
-                    <div class="text-muted fst-italic mb-2">Posted on {{ post.date_posted|date:'d-M-Y' }} {{ post_posted|time:"H:i" }} by {{ post.author }} <a href="{% url 'comment_create' post.pk %}">+ Add comment</a></div>
+                    <div class="text-muted fst-italic mb-2">Posted on {{ post.date_posted|date:'d-M-Y' }} {{ post.date_posted|time:"H:i" }} by {{ post.author }} <a href="{% url 'comment_create' post.pk %}">+ Add comment</a></div>
                 {% else %}
-                    <div class="text-muted fst-italic mb-2">Posted on {{ post.date_posted|date:'d-M-Y' }} {{ post_posted|time:"H:i" }} by {{ post.author }}</div>
+                    <div class="text-muted fst-italic mb-2">Posted on {{ post.date_posted|date:'d-M-Y' }} {{ post.date_posted|time:"H:i" }} by {{ post.author }}</div>
                 {% endif %}
             {% endif %}
             <!-- Post categories-->
