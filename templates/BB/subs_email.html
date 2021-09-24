@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if created %}
+        <h2>Hello, {{usr.first_name}} {{usr.last_name}}. New comment to your post: {{ comment.post_title }}!</h2>
+    {% else %}
+        <h2>Hello, {{usr.first_name}} {{usr.last_name}}. Yours comment to post: {{ comment.post_title }} was be approved.</h2>
+    {% endif %}
+    <h4>Author: {{ comment.author }}</h4>
+    <p>{{ comment.content }}</p>
+</body>
+</html>

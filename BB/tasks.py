@@ -1,6 +1,7 @@
 from celery import shared_task
 
-from .models import Post, User, Comment
+from .models import Comment
+from accounts.models import CustomUser
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
@@ -12,9 +13,9 @@ def email_notifying_new_comment(pk, created, usr_pk):
     full_url = ''.join(['http://', get_current_site(None).domain, ':8000'])
     instance = Comment.objects.get(pk=pk)
     if created:
-        usr = User.objects.get(pk=usr_pk)
+        usr = CustomUser.objects.get(pk=usr_pk)
         html_content = render_to_string(
-            'subs_email.html',
+            'BB/subs_email.html',
             {
                 'comment': instance,
                 'usr': usr,
@@ -24,7 +25,7 @@ def email_notifying_new_comment(pk, created, usr_pk):
         )
 
         msg = EmailMultiAlternatives(
-            subject=instance.title,
+            subject='New comment to your post!',
             body=f'Hello, {usr.first_name} {usr.last_name}. New comment on your post: '+instance.post_title,  #  это то же, что и message
             from_email='ilya.dinaburgskiy@yandex.ru',
             to=[f'{usr.email}'],  # это то же, что и recipients_list
@@ -38,10 +39,10 @@ def email_notifying_comment_approved(pk, created, usr_pk):
 
     full_url = ''.join(['http://', get_current_site(None).domain, ':8000'])
     instance = Comment.objects.get(pk=pk)
-    if created:
-        usr = User.objects.get(pk=usr_pk)
+    if instance.approved:
+        usr = CustomUser.objects.get(pk=usr_pk)
         html_content = render_to_string(
-            'subs_email.html',
+            'BB/subs_email.html',
             {
                 'comment': instance,
                 'usr': usr,
@@ -49,10 +50,9 @@ def email_notifying_comment_approved(pk, created, usr_pk):
                 'created': created,
             }
         )
-
         msg = EmailMultiAlternatives(
-            subject=instance.title,
-            body=f'Hello, {usr.first_name} {usr.last_name}. Your comment on post: '+instance.post_title+'. approved!!',  #  это то же, что и message
+            subject='Yours comment was be Approved!',
+            body=f'Hello, {usr.first_name} {usr.last_name}. Your comment to post: '+instance.post_title+' was be approved!!',  #  это то же, что и message
             from_email='ilya.dinaburgskiy@yandex.ru',
             to=[f'{usr.email}'],  # это то же, что и recipients_list
         )
