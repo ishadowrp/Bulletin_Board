@@ -1,22 +1,18 @@
 {% extends 'flatpages/default.html' %}
 
-{% load i18n %}
-
 {% load crispy_forms_tags %}
 
-{% block head_title %}{% trans "Change Password" %}{% endblock %}
+{% load account %}
+
+{% load static %}
 
 {% block content %}
-    <h1>{% trans "Change Password" %}</h1>
-
-    <form method="POST" action="{% url 'account_change_password' %}" class="password_change">
-        {% csrf_token %}
-        {% crispy form %}
-        <br>
-        <button class="btn btn-success" type="submit" name="action">{% trans "Change Password" %}</button>
-        <a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-    </form>
-{% endblock %}
+    <h1>Delete comment</h1>
+    <form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete? Comment:<br>"{{ comment.content }}"?</p>
+    <input class="btn btn-danger" type="submit" value="Confirm">
+</form>
+{% endblock content %}
 
 {% block cat-widget %}
     {% if cat_fh or cat_sh %}
@@ -40,7 +36,7 @@
 {% endblock cat-widget %}
 
 {% block search %}
-    <form class="input-group " action="{% url 'search_results' %}" method="get">
+    <form class="input-group " action="{% url 'search_comments_results' %}" method="get">
         <input name="q" class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
     </form>
 {% endblock search %}

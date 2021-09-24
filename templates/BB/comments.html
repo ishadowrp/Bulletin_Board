@@ -18,7 +18,7 @@
                     <!-- Post title-->
                     <h3 class="fw-bolder mb-1">Post: {{ comment.post_title }}. Approved!</h3>
                     <!-- Post meta content-->
-                    <div class="text-muted fst-italic mb-2">Posted on {{ comment.date_posted|date:'d-M-Y' }} {{ comment.date_posted|time:"H:i" }} by {{ comment.author }}</div>
+                    <div class="text-muted fst-italic mb-2">Posted on {{ comment.date_posted|date:'d-M-Y' }} {{ comment.date_posted|time:"H:i" }} by {{ comment.author }} <a href="{% url 'comment_delete' comment.pk %}">+ Comment Delete</a></div>
                     <hr><!-- Post categories-->
                 </header>
                 <section class="mb-5 was-validated">
@@ -32,7 +32,7 @@
                     <!-- Post title-->
                     <h3 class="fw-bolder mb-1">Post: {{ comment.post_title }}</h3>
                     <!-- Post meta content-->
-                        <div class="text-muted fst-italic mb-2">Posted on {{ comment.date_posted|date:'d-M-Y' }} {{ comment.date_posted|time:"H:i" }} by {{ comment.author }} <a href="{% url 'comment_approved' comment.pk %}">+ Comment Approved</a></div>
+                        <div class="text-muted fst-italic mb-2">Posted on {{ comment.date_posted|date:'d-M-Y' }} {{ comment.date_posted|time:"H:i" }} by {{ comment.author }} <a href="{% url 'comment_approved' comment.pk %}">+ Comment Approved</a> | <a href="{% url 'comment_delete' comment.pk %}">+ Comment Delete</a></div>
                     <!-- Post categories-->
                 </header>
                 <section class="mb-5">
@@ -66,3 +66,9 @@
         <h4>Categories not found</h4>
     {% endif %}
 {% endblock cat-widget %}
+
+{% block search %}
+    <form class="input-group " action="{% url 'search_comments_results' %}" method="get">
+        <input name="q" class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+    </form>
+{% endblock search %}

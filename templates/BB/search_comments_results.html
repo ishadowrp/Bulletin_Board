@@ -12,27 +12,40 @@
     <h1 class="fw-bolder mb-1">Search results: {{ query }}</h1>
     <br>
     <br>
-    {% if posts %}
-        {% for post in posts %}
-            <article>
+   {% if comments %}
+        {% for comment in comments %}
+            {% if comment.approved %}
+            <article class="form-control">
                 <!-- Post header-->
                 <header class="mb-4">
                     <!-- Post title-->
-                    <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
+                    <h3 class="fw-bolder mb-1">Post: {{ comment.post_title }}. Approved!</h3>
                     <!-- Post meta content-->
-                    <div class="text-muted fst-italic mb-2">Posted on {{ post.date_posted|date:'d-M-Y' }} {{ post_posted|time:"H:i" }} by {{ post.author }}</div>
-                    <!-- Post categories-->
-                    {% for c in post.category.all %}
-                        <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'category_detail' c.id %}">{{ c.name }}</a>
-                    {% endfor %}
+                    <div class="text-muted fst-italic mb-2">Posted on {{ comment.date_posted|date:'d-M-Y' }} {{ comment.date_posted|time:"H:i" }} by {{ comment.author }} <a href="{% url 'comment_delete' comment.pk %}">+ Comment Delete</a></div>
+                    <hr><!-- Post categories-->
                 </header>
-                <section class="mb-5">
-                    {{ post.content|safe|truncatechars:200 }} <a href="{% url 'post_detail' post.id %}">more..</a>
+                <section class="mb-5 was-validated">
+                    {{ comment.content }}
                 </section>
             </article>
+            {% else %}
+            <article class="form-control">
+                <!-- Post header-->
+                <header class="mb-4">
+                    <!-- Post title-->
+                    <h3 class="fw-bolder mb-1">Post: {{ comment.post_title }}</h3>
+                    <!-- Post meta content-->
+                        <div class="text-muted fst-italic mb-2">Posted on {{ comment.date_posted|date:'d-M-Y' }} {{ comment.date_posted|time:"H:i" }} by {{ comment.author }} <a href="{% url 'comment_approved' comment.pk %}">+ Comment Approved</a> | <a href="{% url 'comment_delete' comment.pk %}">+ Comment Delete</a></div>
+                    <!-- Post categories-->
+                </header>
+                <section class="mb-5">
+                    {{ comment.content }}
+                </section>
+            </article>
+            {% endif %}
         {% endfor %}
     {% else %} <!-- Если товаров нет, то говорим что товаров нет ;) -->
-        <h2> {% blocktrans %}No matches found...{% endblocktrans %}</h2>
+        <h2> {% blocktrans %}Comments not found{% endblocktrans %}</h2>
     {% endif %}
 {% endblock content %}
 
@@ -58,7 +71,7 @@
 {% endblock cat-widget %}
 
 {% block search %}
-    <form class="input-group " action="{% url 'search_results' %}" method="get">
+    <form class="input-group " action="{% url 'search_comments_results' %}" method="get">
         <input name="q" class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
     </form>
 {% endblock search %}
