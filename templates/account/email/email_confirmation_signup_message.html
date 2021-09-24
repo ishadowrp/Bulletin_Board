@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% load account %}
+    <h1>Thank you for registering on our portal, {{ user.username }}!</h1>
+    <h3>Follow this link <a href="{{ activate_url }}">the link</a> o activate your account!</h3>
+</body>
+</html>
