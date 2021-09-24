@@ -19,7 +19,7 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = get_user_model()
-        fields = ('email', 'username', 'first_name', 'last_name')
+        fields = ('email', 'username', 'first_name', 'last_name', 'need_mailing_news')
 
     def __init__(self, *args, **kwargs):
         super(CustomUserChangeForm, self).__init__(*args, **kwargs)
@@ -33,6 +33,9 @@ class CustomUserChangeForm(UserChangeForm):
             Row(
                 Field('first_name', css_class='form-control'),
                 Field('last_name', css_class='form-control'),
+            ),
+            Row(
+                Field('need_mailing_news', type="checkbox", css_class='form-check-input'),
             ),
             HTML(
                 "<p><a class='button secondaryAction' href={url}>{text}</a></p>".format(

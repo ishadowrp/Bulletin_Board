@@ -66,9 +66,9 @@ def week_email_sending():
     start_date = end_date - datetime.timedelta(days=7)
     full_url = ''.join(['http://', get_current_site(None).domain, ':8000'])
 
-    for u in CustomUser.objects.all():
-        list_of_posts = Post.objects.filter(date_posted__range=(start_date, end_date))
-        if len(list_of_posts) > 0:
+    list_of_posts = Post.objects.filter(date_posted__range=(start_date, end_date))
+    if len(list_of_posts) > 0:
+        for u in CustomUser.objects.filter(need_mailing_news=True):
             html_content = render_to_string(
                 'BB/subs_email_each_week.html',
                 {
