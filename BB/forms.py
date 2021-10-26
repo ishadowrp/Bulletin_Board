@@ -1,9 +1,10 @@
+from django.http import HttpRequest
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Row, Field, HTML
+from crispy_forms.layout import Submit, Layout, Row, Field, HTML, Column, MultiField
 
-from .models import Post, Comment
+from .models import Post, Comment, Category
 from django.forms.widgets import Textarea
 from ckeditor.widgets import CKEditorWidget
 
@@ -19,6 +20,10 @@ class PostFormCreate(forms.ModelForm):
     # в класс мета как обычно надо написать модель по которой будет строится форма и нужные нам поля. Мы уже делали что-то похожее с фильтрами.
     title = forms.CharField(max_length=150)
     content = forms.CharField(widget=CKEditorWidget())
+    category = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(),
+        widget=forms.CheckboxSelectMultiple
+    )
 
     class Meta:
         model = Post
@@ -32,7 +37,7 @@ class PostFormCreate(forms.ModelForm):
         self.helper.layout = Layout(
             Row(
                 Field('title', css_class='col-md-3 form-control'),
-                Field('category', css_class='col-md-3 form-control'),
+                Field('category', column="2", type="checkbox", css_class='form-check-input'),
             ),
             Row(
                 Field('content', css_class='col-md-12'),
@@ -45,6 +50,9 @@ class PostFormUpdate(forms.ModelForm):
     # в класс мета как обычно надо написать модель по которой будет строится форма и нужные нам поля. Мы уже делали что-то похожее с фильтрами.
     title = forms.CharField(max_length=150)
     content = forms.CharField(widget=CKEditorWidget())
+    category = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(),
+        widget=forms.CheckboxSelectMultiple)
 
     class Meta:
         model = Post
@@ -58,7 +66,7 @@ class PostFormUpdate(forms.ModelForm):
         self.helper.layout = Layout(
             Row(
                 Field('title', css_class='col-md-3 form-control'),
-                Field('category', css_class='col-md-3 form-control'),
+                Field('category', type="checkbox", css_class='form-check-input'),
             ),
             Row(
                 Field('content', css_class='col-md-12'),
