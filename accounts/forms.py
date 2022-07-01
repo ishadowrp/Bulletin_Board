@@ -11,10 +11,12 @@ from crispy_forms.layout import HTML, Submit, Layout, Row, Field
 
 from django import forms
 
+
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = get_user_model()
         fields = ('email', 'username', 'first_name', 'last_name')
+
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
@@ -46,8 +48,8 @@ class CustomUserChangeForm(UserChangeForm):
 
         self.helper.add_input(Submit('submit', 'Edit profile', css_class='btn btn-success'))
 
-class MyLoginForm(LoginForm):
 
+class MyLoginForm(LoginForm):
     class Meta:
         model = get_user_model()
         fields = ('email', 'password')
@@ -139,6 +141,7 @@ class MySignupForm(SignupForm):
 
         # self.helper.add_input(Submit('submit', 'Sign Up', css_class='btn btn-success'))
 
+
 class MyChangePasswordForm(ChangePasswordForm):
     # pass
     def __init__(self, *args, **kwargs):
@@ -156,6 +159,7 @@ class MyChangePasswordForm(ChangePasswordForm):
         )
 
         # self.helper.add_input(Submit('submit', 'Sign Up', css_class='btn btn-success'))
+
 
 class MyResetPasswordForm(ResetPasswordForm):
     # pass

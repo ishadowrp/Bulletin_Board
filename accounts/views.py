@@ -56,7 +56,8 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, **kwargs):
         # id = self.kwargs.get('pk')
-        return User.objects.get(id=self.request.user.id)
+        # return User.objects.get(id=self.request.user.id)
+        return self.request.user
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
